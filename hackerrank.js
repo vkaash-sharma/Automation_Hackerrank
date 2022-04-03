@@ -1,7 +1,7 @@
 const puppeteer = require("puppeteer");
 
 let email = "vikasayushsharma@gmail.com";
-let password = "************";
+let password = "";
 
 let cTab;
 let browserOpenPromise = puppeteer.launch({
@@ -65,11 +65,39 @@ browserOpenPromise
 })
 .then(function(){
     console.log("algorithm pages is opened");
+    let allQuesPromise = cTab.waitForSelector(
+        'a[data-analytics="ChallengeListChallengeName"]'
+    );
+    return allQuesPromise
 
 })
-.catch(function(err){
-    console.log(err);
+.then(function(){
+  
+    function getAllQuesLinks() {
+        let allElemArr = document.querySelectorAll(
+            'a[data-analytics="ChallengeListChallengeName"]'
+        );
+
+        let linksArr = [];
+        for(let i = 0 ; i < allElemArr.length ; i++){
+            linksArr.push(allElemArr[i].getAttribute("href"));
+        }
+        return linksArr;
+    }
+
+    let linksArrPromise = cTab.evaluate(getAllQuesLinks);
+    return linksArrPromise;
+
+
 })
+.then(function(linksArr) {
+    console.log("links to all ques received");
+    console.log(linksArr);
+    //  bss question solve krne hai
+})
+.catch(function (err) {
+    console.log(err);
+  });
 
 function waitAndClick(algobtn) {
 
@@ -83,6 +111,7 @@ function waitAndClick(algobtn) {
         })
         .then(function () {
             console.log("algo btn is clicked");
+            resolve();
         })
         .catch(function(err) {
             console.log(err);

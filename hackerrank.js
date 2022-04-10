@@ -34,14 +34,14 @@ browserOpenPromise
 .then(function(data){
     console.log(data);
     console.log("hackerrank login page open");
-   let emailWillBeTypedPromise = cTab.type("input[name='username']",email);
+   let emailWillBeTypedPromise = cTab.type("input[name='username']",email , {delay:100});
    return emailWillBeTypedPromise;
 })
 
 .then(function(){
 
-    console.log("email is typed");
-    let passwordWillBeTypedPromise = cTab.type("input[type='password']",password);
+    console.log("password is typed");
+    let passwordWillBeTypedPromise = cTab.type("input[type='password']",password ,{delay:100});
     return passwordWillBeTypedPromise;
 })
 
@@ -149,7 +149,7 @@ function questionSolver(url , idx){
          return waitForTextBoxPromise;
      })
      .then( function () {
-         let codeWillBeTypedPromise = cTab.type(".custominput", answer[idx]);
+         let codeWillBeTypedPromise = cTab.type(".custominput", answer[idx] , {delay:100});
          return codeWillBeTypedPromise;
      })
      .then(function () {

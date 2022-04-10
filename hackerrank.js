@@ -12,7 +12,7 @@ let browserOpenPromise = puppeteer.launch({
 });
 
 browserOpenPromise
-.then(function(browser){
+.then(function(browser ){
   
     console.log("Your Browser is Open");
 
